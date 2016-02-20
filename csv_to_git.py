@@ -77,6 +77,3 @@ with open(sys.argv[1], 'r') as csvfile:
             send_email_message(student_email, git_repo_url, student_name)
         else:
             send_email_message(student_email, None, student_name)
-
-            # cmd = "ls -l " + sys.argv[1]
-            # os.system(cmd)
