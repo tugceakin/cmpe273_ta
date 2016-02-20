@@ -35,31 +35,25 @@ def write(filename, content):
 
 
 with open(sys.argv[1], 'r') as csvfile:
+    try:
+	os.chdir("gitolite-admin")
+    except OSError:
+	pass
     r = csv.DictReader(csvfile)
     for row in r:
-        print type(row)
         student_name = row['Your full name']
         student_id = row['SJSU ID']
         student_key = row['Public key']
         student_email = row['Email ID']
         if student_key.startswith("ssh"):
             git_repo_name = "%s_%s" % (student_name.strip().replace(" ", "_").lower(), student_id)
-            move_to_git_folder = "cd gitolite-admin"
-            try:
-                os.chdir("gitolite-admin")
-            except OSError:
-                pass
-            os.system("pwd")
             file_name = "keydir/%s.pub" % git_repo_name
             write(file_name, student_key)
-            os.system("ls -l keydir")
             git_add_repo_line1 = "repo    %s" % git_repo_name
             git_add_repo_line2 = "    RW    =    %s" % git_repo_name
             with open("conf/gitolite.conf", "a") as git_file:
                 git_file.write(git_add_repo_line1)
                 git_file.write("\n")
-                git_file.close()
-            with open("conf/gitolite.conf", "a") as git_file:
                 git_file.write(git_add_repo_line2)
                 git_file.write("\n")
                 git_file.write("\n")
