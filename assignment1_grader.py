@@ -4,6 +4,7 @@ Script to test assignment 1. Subject to change.
 try:
     import requests
     import datetime
+    import json
 except Exception as e:
     print "Requests library not found. Please install it. \nHint: pip install requests"
 
@@ -45,7 +46,7 @@ change_person = {
 def test_post(url):
     post_url = "%s/profile" % url
     try:
-        r = requests.post(post_url, data=person)
+        r = requests.post(post_url, data=json.dumps(person))
         if r.status_code == 201:
             d = datetime.datetime.now()
             print "POST Check successful. Time: %s" % d
@@ -76,7 +77,7 @@ def test_get(url):
 
 def test_put(url):
     put_url = "%s/profile/%s" % (url, person['email'])
-    r = requests.put(put_url, data=change_person)
+    r = requests.put(put_url, data=json.dumps(change_person))
     if r.status_code == 204:
         t = datetime.datetime.now()
         print "PUT request sent successfully. Time: %s" % t
