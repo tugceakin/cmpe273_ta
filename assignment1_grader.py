@@ -93,6 +93,10 @@ def test_put(url):
                 if d['favorite_sport'] == change_person['favorite_sport']:
                     t = datetime.datetime.now()
                     print "GET after Put successful. Time: %s" % t
+                else:
+                    print "GET after PUT incorrect"
+            else:
+                print "GET after PUT incorrect"
         except Exception as e:
             print "GET after PUT failed"
     else:
